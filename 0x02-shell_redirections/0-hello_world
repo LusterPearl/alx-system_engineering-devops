@@ -1,2 +1,2 @@
-#!/bin/bash
-echo 'hello, World' 
+#!/bin/base
+echo "0-hello_world"
