@@ -2,12 +2,8 @@
 # This script lists the content of the current directory, showing only part of the name
 
 # Use a for loop to iterate through the files and directories
-for item in *
-do
-	if [ -d "$item" ] && ! [[ "$item" == .* ]]
-	then
-		display_name=$(echo "$item" | cut -d '-' -f 2- )
+list=$(ls)
 
-		echo "$display_name"
-	fi
+for i in $list; do
+	echo "$i" | cut -d '-' -f2
 done
