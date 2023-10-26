@@ -2,4 +2,4 @@
 # This script groups visitors by IP and HTTP status code and displays the data
 
 # Use awk to process the Apache log file and count occurrences
-awk '{ count[$1" "$9]++ } END { for (ipcode in count) print count[ipcode], ipcode }' /etc/apache-access.log | sort - n | head -n 10
+awk '{ count[$1" "$9]++ } END { for (ipcode in count) print count[ipcode], ipcode }' /etc/apache-access.log | sort -nr | head -n 10
