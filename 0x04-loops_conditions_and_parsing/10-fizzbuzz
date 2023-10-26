@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+# This script displays numbers from 1 tp 100 with Fizz, Buzz, and FizzBuzz as specified.
+
+# Use a for loop to iterate through numbers from 1 to 100
+for num in {1..100}
+do
+	if ((num % 3 == 0)) && ((num % 5 == 0))
+	then
+		echo "FizzBuzz"
+	# check if the number is a multiple of 3 (Fizz)
+	elif ((num % 3 == 0))
+	then
+		echo "Fizz"
+	# Check if the number is a multiple of 5 (Buzz)
+	elif ((num % 5 == 0))
+	then
+		echo "Buzz"
+	else
+		echo "$num"
+	fi
+done

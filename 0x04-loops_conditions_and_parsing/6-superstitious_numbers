@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+# This script displays number from 1 to 20 and shows "bad luck" messages for specific loop iterations
+
+counter=1
+
+# Start a while loop that continues until the counter is less than or equal
+while [ $counter -le 20 ]
+do
+	case $counter in
+	4)
+		echo "4"
+		echo "bad luck frm china"
+		;;
+	9)
+		echo "9"
+		echo "bad luck from japan"
+		;;
+	17)
+		echo "17"
+		echo "bad luck from Italy"
+		;;
+	*)
+		echo $counter
+		;;
+	esac
+
+	((counter++))
+done

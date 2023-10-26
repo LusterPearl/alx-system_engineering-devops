@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+# This script displays "Best School" 10 times and says Hi on the 9th iteration
+
+counter=0
+
+# Start a while loop tha continues until the counter is less than 10
+while [ $counter -lt 10 ]
+do
+	if [ $counter -eq 8 ]
+	then
+		echo "Best School"
+		echo "Hi"
+	else
+		echo "Best School"
+	fi
+
+	((counter++))
+done

@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+# This script displays "Best School", "bad luck", or "good luck" based on the loop iteration.
+
+counter=1
+
+# Start a while loop that continues until the counter is less than or equal
+while [ $counter -le 10 ]
+do
+	if [ $counter -eq 4 ]
+	then
+		echo "bad luck"
+	elif [ $counter -eq 8 ]
+	then
+		echo "good luck"
+	else
+		echo "Best School"
+	fi
+
+	((counter++))
+done
