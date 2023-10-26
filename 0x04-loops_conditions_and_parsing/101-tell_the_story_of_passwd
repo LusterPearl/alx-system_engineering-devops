@@ -1,11 +1,16 @@
 #!/usr/bin/env bash
 # This script tells a story about the users in the /etc/passwd file
 
+# Set the Internam Field Seperator ':'
+IFS=":"
+
 # Use a while loop to read linus from /etc/passwd 
-while IFS=":" read -r username _ userid _ groupname _ homedir _ shell
+while read -r username password uid gid gecos home shell
 do
-	fullname=$(getent passwd "$username" | cut -d ':' -f 5)
+	user_id=$(basename "$home")
 
 	# Print the user's story with the extracted information
-	echo "The user $username is part of the $groupmame gang, lives in $homedir and rides $shell. $userid's place is protected by the passcode x, more info about the user here: $fullname"
+	echo "The user $username is part of the $gid gang, lives in $home and rides $shell. $uid's place is protected by the passcode $password, more info about the user here: $gecos"
 done < /etc/passwd
+
+IFS=$' \t\n'
