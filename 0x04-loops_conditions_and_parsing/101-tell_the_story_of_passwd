@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # This script tells a story about the users in the /etc/passwd file
 
-# Set the Internam Field Seperator ':'
+# Set the Internal Field Separator ':'
 IFS=":"
 
 # Use a while loop to read linus from /etc/passwd 
