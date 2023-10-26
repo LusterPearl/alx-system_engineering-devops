@@ -7,5 +7,5 @@ do
 	fullname=$(getent passwd "$username" | cut -d ':' -f 5)
 
 	# Print the user's storry with the extracted information
-	echo "The user $username is part of the $groupid gang, lives in $homedir and rides $shell. $userid's place is protected by the passcode x, more info about the user here: $fullname"
+	echo "The user $username is part of the $groupmame gang, lives in $homedir and rides $shell. $userid's place is protected by the passcode x, more info about the user here: $fullname"
 done < /etc/passwd
