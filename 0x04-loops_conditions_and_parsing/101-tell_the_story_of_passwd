@@ -2,10 +2,10 @@
 # This script tells a story about the users in the /etc/passwd file
 
 # Use a while loop to read linus from /etc/passwd 
-while IFS=: read -r username _ userid _ groupname _ homedir _ shell
+while IFS=":" read -r username _ userid _ groupname _ homedir _ shell
 do
 	fullname=$(getent passwd "$username" | cut -d ':' -f 5)
 
-	# Print the user's storry with the extracted information
+	# Print the user's story with the extracted information
 	echo "The user $username is part of the $groupmame gang, lives in $homedir and rides $shell. $userid's place is protected by the passcode x, more info about the user here: $fullname"
 done < /etc/passwd
