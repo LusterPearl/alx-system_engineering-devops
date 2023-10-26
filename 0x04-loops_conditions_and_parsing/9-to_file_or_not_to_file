@@ -13,7 +13,7 @@ if [ -e "school" ]; then
 
 	# check if the file is a regular file
 	if [ -f "school" ]; then
-		echo "school is a reqular file"
+		echo "school is a regular file"
 	fi
 else
 	echo "school file does not exist"
