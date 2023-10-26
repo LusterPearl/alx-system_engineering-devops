@@ -9,7 +9,7 @@ do
 	case $counter in
 	4)
 		echo "4"
-		echo "bad luck frm china"
+		echo "bad luck from china"
 		;;
 	9)
 		echo "9"
