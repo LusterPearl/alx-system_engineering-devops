@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 # This script tells a story about the users in the /etc/passwd file
 
-while IFS=: read -r username _ userid _ groupname _ homedir _ shel
+# Use a while loop to read linus from /etc/passwd 
+while IFS=: read -r username _ userid _ groupname _ homedir _ shell
 do
 	fullname=$(getent passwd "$username" | cut -d ':' -f 5)
 
