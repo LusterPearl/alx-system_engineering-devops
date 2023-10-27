@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# This script displays "To infinity and beyond" indefinitely with a 2-second sleep between iterations
+
+while true; do
+	echo "To infinity and beyond"
+	sleep 2
+done
