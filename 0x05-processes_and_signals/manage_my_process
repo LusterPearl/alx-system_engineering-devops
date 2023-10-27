@@ -1,4 +1,4 @@
-#!/bin/bin/env bash
+#!/usr/bin/env bash
 # manage_my_process - Indefinitely writes "I am alive!" to /tmp/my_process
 
 while true; do

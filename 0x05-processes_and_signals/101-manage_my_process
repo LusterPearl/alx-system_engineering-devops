@@ -1,4 +1,4 @@
-#!/bin/bin/env bash
+#!/usr/bin/env bash
 # 101-manage_my_process - Init script to manage manage_my_process
 
 # Define the process name and PID file path
