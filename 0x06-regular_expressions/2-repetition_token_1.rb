@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-# Check if there is exactly ne command-line argument
+# Check if there is exactly one command-line argument
 
 if ARGV.length != 1
   puts "Usage: #{$PROGRAM_NAME} <text>"
@@ -7,7 +7,7 @@ if ARGV.length != 1
 end
 
 # Define the regular expression pattern to match the specified cases
-pattern = /hb+t+n/
+pattern = /hb*t+n/
 
 # Match the pattern in the input text
 matches = ARGV[0].scan(pattern)
