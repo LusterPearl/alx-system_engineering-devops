@@ -7,7 +7,7 @@ if ARGV.length != 1
 end
 
 # Define your regular expression pattern here
-pattern = /hb*t+n/
+pattern = /hbt{2,5}n/
 
 # Match the pattern in the input text
 matches = ARGV[0].scan(pattern)
