@@ -13,4 +13,4 @@ pattern = /hb*t+n/
 matches = ARGV[0].scan(pattern)
 
 # Output the matched text
-puts matches.join
+puts matches.join("\n")
