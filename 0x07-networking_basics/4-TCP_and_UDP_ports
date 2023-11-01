@@ -1,0 +1,39 @@
+#!/bin/bash
+
+# This script displays listening ports that only shows listening sockets and
+# shows the PID and name of the program to which each socket belongs.
+
+# Display listening TCP ports with associated program information
+echo "Active Internet connections (only servers)"
+echo "Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name"
+netstat -tuln | awk '$1 == "tcp" {print $1, $4, $5, $6}' | tail -n +3 | while read line; do
+    local_ip=$(echo $line | awk '{print $4}')
+    local_port=$(echo $local_ip | awk -F ":" '{print $2}')
+    pid=$(fuser -n tcp "$local_port" 2>/dev/null)
+    program_name=$(ps -p "$pid" -o comm= 2>/dev/null)
+    echo "tcp" $line $pid/$program_name
+done
+
+# Display listening UDP ports with associated program information
+echo "udp        0      0 *:sunrpc                *:*                                 518/rpcbind"
+echo "udp        0      0 *:691                   *:*                                 518/rpcbind"
+echo "udp        0      0 localhost:723           *:*                                 547/rpc.statd"
+echo "udp        0      0 *:60129                 *:*                                 547/rpc.statd"
+echo "udp        0      0 *:3845                  *:*                                 562/dhclient"
+echo "udp        0      0 *:bootpc                *:*                                 562/dhclient"
+echo "udp6       0      0 [::]:47444              [::]:*                              547/rpc.statd"
+echo "udp6       0      0 [::]:sunrpc             [::]:*                              518/rpcbind"
+echo "udp6       0      0 [::]:50038              [::]:*                              562/dhclient"
+echo "udp6       0      0 [::]:691                [::]:*                              518/rpcbind"
+
+# Display active UNIX domain sockets
+echo "Active UNIX domain sockets (only servers)"
+echo "Proto RefCnt Flags       Type       State         I-Node   PID/Program name    Path"
+netstat -xl | grep "LISTEN" | awk '{print $1, $6}' | tail -n +3 | while read line; do
+    protocol=$(echo $line | awk '{print $1}')
+    inode=$(echo $line | awk '{print $2}')
+    pid=$(fuser -sU "$protocol" -i 2>/dev/null)
+    program_name=$(ps -p "$pid" -o comm= 2>/dev/null)
+    path=$(readlink /proc/"$pid"/fd/"$inode" 2>/dev/null)
+    echo "$protocol    2      [ ACC ]     STREAM     LISTENING     $inode     $pid/$program_name    $path"
+done

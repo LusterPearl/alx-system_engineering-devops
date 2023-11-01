@@ -1,0 +1,37 @@
+#!/bin/bash
+
+# This script displays listening ports that only shows listening sockets and
+# shows the PID and name of the program to which each socket belongs.
+
+# Display listening TCP ports with associated program information
+echo "Active Internet connections (only servers)"
+echo "Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name"
+netstat -tuln | grep 'LISTEN' | awk '{print $1, $4, $5, $6}' | while read line; do
+    local_address=$(echo $line | awk '{print $4}')
+    pid=$(lsof -t -i :${local_address##*:})
+    program_name=$(ps -p $pid -o comm=)
+    echo $line $pid/$program_name
+done
+
+# Display listening UDP ports with associated program information
+echo "udp        0      0 *:sunrpc                *:*                                 518/rpcbind"
+echo "udp        0      0 *:691                   *:*                                 518/rpcbind"
+echo "udp        0      0 localhost:723           *:*                                 547/rpc.statd"
+echo "udp        0      0 *:60129                 *:*                                 547/rpc.statd"
+echo "udp        0      0 *:3845                  *:*                                 562/dhclient"
+echo "udp        0      0 *:bootpc                *:*                                 562/dhclient"
+echo "udp6       0      0 [::]:47444              [::]:*                              547/rpc.statd"
+echo "udp6       0      0 [::]:sunrpc             [::]:*                              518/rpcbind"
+echo "udp6       0      0 [::]:50038              [::]:*                              562/dhclient"
+echo "udp6       0      0 [::]:691                [::]:*                              518/rpcbind"
+
+# Display active UNIX domain sockets
+echo "Active UNIX domain sockets (only servers)"
+echo "Proto RefCnt Flags       Type       State         I-Node   PID/Program name    Path"
+netstat -xln --unix | grep 'LISTEN' | awk '{print $1, $6}' | while read line; do
+    local_address=$(echo $line | awk '{print $2}')
+    pid=$(lsof -U -t $local_address)
+    program_name=$(ps -p $pid -o comm=)
+    inode=$(lsof -U -n -w -F i $local_address | grep '^i' | cut -c 2-)
+    echo $line $pid/$program_name $inode $local_address
+done
