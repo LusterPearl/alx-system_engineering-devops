@@ -3,17 +3,6 @@
 # This script provides answers to questions about types of networks.
 # The script should print the answers and end with a new line.
 
-# Answer to the first question
-echo "What type of network a computer in local is connected to?"
-echo "LAN"
-echo
-
-# Answer to the second question
-echo "What type of network could connect an office in one building to another office in a building a few streets away?"
-echo "WAN"
-echo
-
-# Answer to the third question
-echo "What network do you use when you browse www.google.com from your smartphone (not connected to the Wifi)?"
-echo "Internet"
-echo
+3
+2
+1
