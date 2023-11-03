@@ -1,21 +1,7 @@
 #!/usr/bin/env bash
-
 # Check if the script is run with sudo
-if [ "(id -u)" -ne 0 ]; then
-	echo "Please run this script with sudo or as root."
-	exit 1
-fi
-
 # Change the IP address resolution for localhost (127.0.0.2) and facebook.com(8.8.8.8.)
-echo "127.0.0.2 localhost" >> /etc/hosts
-echo "8.8.8.8 facebook.com" >> /etc/hosts
-
-# Display a message to confirm the changes
-echo "IP address resolutions have been changed:"
-echo /etc/hosts
-
-# Restart the networking service to apply changes
-systemctl restart networking
-
-# Notify the user about the need to revert changes after use
-echo "Note: If you continue to use this machine, remember to revert localhost to 127.0.0.1 in /etc/hosts/."
+cp /etc/hosts ~/hosts.new
+echo "127.0.0.2		localhost" > ~/etc/hosts
+echo "8.8.8.8		facebook.com" >> ~/etc/hosts
+cp -f ~/hosts.new /etc/hosts
