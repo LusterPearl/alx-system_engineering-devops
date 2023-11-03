@@ -1,5 +1,4 @@
 #!/bin/bash
 # This script displays listening ports that only shows listening sockets and
 # shows the PID and name of the program to which each socket belongs.
-# Display listening TCP ports with associated program information
 netstat -lp
