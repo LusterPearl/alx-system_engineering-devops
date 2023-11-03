@@ -3,9 +3,11 @@
 # This script provides answers to questions about the OSI model.
 
 # Answer to the first question
+2
 echo "What is the 0SI model?"
 echo "The OSI model is a conceptual model that characterizes the communication functions of a telecommunication system without regard to their underlying internal structure and technology."
 
 # Answer to the second question
+2
 echo "How is the OSI model organized?"
 echo "The OSI model is organized from the lowest to the highest level."
