@@ -1,18 +1,3 @@
-#!/usr/bin/env bash
-
-# This script provides answers to questions about UDP and TCP.
-# The script should print the answers and end with a new line.
-
-# Answer to the first question
-echo "Which statement is correct for the TCP box:"
-echo "It is a protocol that is transferring data in a slow way but surely"
-echo
-
-# Answer to the second question
-echo "Which statement is correct for the UDP box:"
-echo "It is a protocol that is transferring data in a fast way and might lose data along in the process"
-echo
-
-# Answer to the third question
-echo "Which statement is correct for the TCP worker:"
-echo "Have you received boxes x, y, z .
+1
+2
+1
