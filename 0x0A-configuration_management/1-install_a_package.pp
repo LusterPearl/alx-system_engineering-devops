@@ -5,7 +5,6 @@ package { 'Flask':
   provider => 'pip3',
 }
 
-# Ensure pip3 is installed (use Exec as a workaround for simplicity)
 exec { 'echo_flask_version':
   command => '/bin/echo "flask --version" | /usr/bin/python3',
   path    => ['/usr/bin', '/bin'],
