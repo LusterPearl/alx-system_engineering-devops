@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# This script connects to the server using ssh and a private key
+
+# Use ssh with single-character flags to connect to the server
+# -i specifies the path to the private key
+# ubuntu is the user, and the server IP is provided as an argument
+ssh -i ~/.ssh/school ubuntu@8.8.8.8
