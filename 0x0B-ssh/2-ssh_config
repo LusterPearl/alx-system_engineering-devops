@@ -1,0 +1,8 @@
+# SSH client configuration file
+
+Host 422858-web-01
+  # Use the private key ~/.ssh/school
+  IdentityFile ~/.ssh/school
+
+  # Refuse to authenticate using a password
+  PasswordAuthentication no
