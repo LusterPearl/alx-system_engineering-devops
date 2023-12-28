@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+# This script creates an RSA key pair with specific requirements
+
+# Set the key name
+KEY_NAME="school"
+
+# Set the number of bits for the key
+BITS=4096
+
+# Set the passphrase for the key
+PASSPHRASE="betty"
+
+# Generate the RSA key pair
+ssh-keygen -t rsa -b $BITS -C "vagrant@ubuntu" -N "$PASSPHRASE" -f "$KEY_NAME"
+
+# Display information about the generated key pair
+echo "The key pair has been generated:"
+ls -l "$KEY_NAME" "$KEY_NAME.pub"
