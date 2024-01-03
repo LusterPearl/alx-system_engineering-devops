@@ -1,4 +1,1 @@
-#!/usr/bin/env bash
-# This script provides the configured domain name
-
-echo "myschool.tech"
+myschool.tech
