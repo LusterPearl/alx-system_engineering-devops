@@ -9,8 +9,11 @@ sudo service nginx start
 # Create a backup of the default Nginx configuration file
 sudo cp /etc/nginx/sites-available/default /etc/nginx/sites-available/default_backup
 
-# Define the redirection in Nginx configuration
-sudo sed -i '/server_name _;/a \\tlocation /redirect_me {\n\t\treturn 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;\n\t}\n' /etc/nginx/sites-available/default
+# Define the custom 404 page in Nginx configuration
+echo -e "\nerror_page 404 /custom_404.html;\nlocation = /custom_404.html {\n\tinternal;\n\treturn 404 \"Ceci n'est pas une page\";\n}\n" | sudo tee -a /etc/nginx/sites-available/default > /dev/null
+
+# Create the custom 404 page in the correct directory
+echo "Ceci n'est pas une page" | sudo tee /var/www/html/custom_404.html > /dev/null
 
 # Restart Nginx to apply changes
 sudo service nginx restart

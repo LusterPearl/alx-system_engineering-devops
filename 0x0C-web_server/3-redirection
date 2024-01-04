@@ -9,8 +9,8 @@ sudo service nginx start
 # Create a backup of the default Nginx configuration file
 sudo cp /etc/nginx/sites-available/default /etc/nginx/sites-available/default_backup
 
-# Define the redirection in the Nginx configuration
-sudo sed -i '/server_name _;/a \\tlocation /redirect_me {\n\t\treturn 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;\n\t}\n' /etc/nginx/sites-available/default
+# Define the redirection in Nginx configuration
+echo -e "\nlocation /redirect_me {\n\treturn 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;\n}\n" | sudo tee -a /etc/nginx/sites-available/default > /dev/null
 
 # Restart Nginx to apply changes
 sudo service nginx restart
