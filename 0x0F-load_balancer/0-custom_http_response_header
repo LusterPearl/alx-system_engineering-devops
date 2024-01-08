@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+# This script configures a brand new Ubuntu machine to meet the requirements of Task 0.
+
+# Install Nginx
+sudo apt-get update
+sudo apt-get install -y nginx
+
+# Configure Nginx with custom header
+echo 'server {
+    listen 80;
+    server_name localhost;
+
+    location / {
+        add_header X-Served-By $HOSTNAME;
+        # Other Nginx configurations...
+    }
+}' | sudo tee /etc/nginx/sites-available/default
+
+# Restart Nginx to apply changes
+sudo service nginx restart
