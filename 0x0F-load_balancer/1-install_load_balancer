@@ -3,6 +3,7 @@
 
 sudo apt-get install -y haproxy
 
+# Configure HAProxy
 echo "ENABLED-1" >> /etc/default/haproxy
 mv /etc/haproxy/haproxy.cfg{,.original}
 touch /etc/haproxy/haproxy.cfg
@@ -42,3 +43,9 @@ backend servers
     server  422858-web-01 100.26.168.142:80 check
     server  422858-web-02 100.25.35.218:80 check
 " >> /etc/haproxy/haproxy.cfg
+
+# Restart HAProxy service
+sudo systemctl restart haproxy
+
+# Display HAProxy service status
+sudo systemctl status haproxy.service
