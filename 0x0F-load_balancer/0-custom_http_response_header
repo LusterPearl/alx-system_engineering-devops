@@ -1,24 +1,14 @@
 #!/usr/bin/env bash
-# This script configures a brand new Ubuntu machine to meet the requirements.
+# This script configures a brand new Ubuntu machine to meet the requirements
+# Update the package list
 
-INDEX_CPY="Successful!"
-ERROR_CPY="404 - Page not found"
+sudo apt-get update
 
-sudo apt-get -y update
-sudo apt-get -y install nginx
+# Install Nginx package
+sudo apt-get install -y nginx
 
-echo "$INDEX_CPY" | sudo tee /var/www/html/index.nginx-debian.html > /dev/null
-echo "$ERROR_CPY" | sudo tee /var/www/html/custom_404.html > /dev/null
+# Add custom HTTP response header to Nginx config
+echo 'add_header X-Served-By "$HOSTNAME";' | sudo tee -a /etc/nginx/nginx.conf
 
-#configurate redirection
-sudo sed -i '/^\sserver_name.*/a \        rewrite ^/redirect_me https://www.x.com/the_kacchi?s=21 permanent;' /etc/nginx/sites-available/default
-
-#configurate custom 404
-sudo sed -i '/^\slocation.*/i \        error_page 404 /custom_404.html;' /etc/nginx/sites-available/default
-
-#shellcheck disable=SC2154
-#configurate custom custkm response header
-sudo sed -i '/^\slocation.*/i \        add_header X-Served-By $hostname;' /etc/nginx/sites-available/default
-
-#run the server
-sudo service nginx start
+# Restart Nginx service
+sudo systemctl restart nginx
