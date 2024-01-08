@@ -1,26 +1,15 @@
 # Install Nginx package
-class { 'nginx':
-  ensure => 'installed',
+exec {'update':
+  command => '/usr/bin/apt-get update',
 }
-
-# Get the hostname
-$hostname = $facts['networking']['hostname']
-
-# Create a custom HTTP response header
-file { '/etc/nginx/sites-available/custom_header':
-  ensure  => 'file',
-  content => "add_header X-Served-By ${hostname};",
+-> package {'nginx':
+  ensure => 'present',
 }
-
-# Symbolic link to enable the site
-file { '/etc/nginx/sites-enabled/custom_header':
-  ensure => 'link',
-  target => '/etc/nginx/sites-available/custom_header',
+-> file_line { 'add_header':
+  path  => '/etc/nginx/nginx.conf',
+  match => 'http {',
+  line  => "http {\n\tadd_header X-Served-By \"${hostname}\";",
 }
-
-# Restart Nginx for changes to take effect
-service { 'nginx':
-  ensure    => 'running',
-  enable    => true,
-  subscribe => File['/etc/nginx/sites-available/custom_header'],
+-> exec {'restart_nginx':
+  command => '/usr/sbin/service nginx restart',
 }

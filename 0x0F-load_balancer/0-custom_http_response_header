@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# This script configures a brand new Ubuntu machine to meet the req.
+# This script configures a brand new Ubuntu machine to meet the requirements.
 
 INDEX_CPY="Successful!"
 ERROR_CPY="404 - Page not found"
