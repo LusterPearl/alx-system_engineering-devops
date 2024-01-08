@@ -1,20 +1,24 @@
 #!/usr/bin/env bash
-# This script configures a brand new Ubuntu machine to meet the requirements of Task 0.
+# This script configures a brand new Ubuntu machine to meet the req.
 
-# Install Nginx
-sudo apt-get update
-sudo apt-get install -y nginx
+INDEX_CPY="Successful!"
+ERROR_CPY="404 - Page not found"
 
-# Configure Nginx with custom header
-echo 'server {
-    listen 80;
-    server_name localhost;
+sudo apt-get -y update
+sudo apt-get -y install nginx
 
-    location / {
-        add_header X-Served-By $HOSTNAME;
-        # Other Nginx configurations...
-    }
-}' | sudo tee /etc/nginx/sites-available/default
+echo "$INDEX_CPY" | sudo tee /var/www/html/index.nginx-debian.html > /dev/null
+echo "$ERROR_CPY" | sudo tee /var/www/html/custom_404.html > /dev/null
 
-# Restart Nginx to apply changes
-sudo service nginx restart
+#configurate redirection
+sudo sed -i '/^\sserver_name.*/a \        rewrite ^/redirect_me https://www.x.com/the_kacchi?s=21 permanent;' /etc/nginx/sites-available/default
+
+#configurate custom 404
+sudo sed -i '/^\slocation.*/i \        error_page 404 /custom_404.html;' /etc/nginx/sites-available/default
+
+#shellcheck disable=SC2154
+#configurate custom custkm response header
+sudo sed -i '/^\slocation.*/i \        add_header X-Served-By $hostname;' /etc/nginx/sites-available/default
+
+#run the server
+sudo service nginx start
