@@ -9,7 +9,7 @@ $hostname = $facts['networking']['hostname']
 # Create a custom HTTP response header
 file { '/etc/nginx/sites-available/custom_header':
   ensure  => 'file',
-  content => "add_header X-Served-By ${hostname};",
+  content => "add_header X-Served-By ${hostname};\n",
 }
 
 # Symbolic link to enable the site
