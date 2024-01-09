@@ -1,14 +1,13 @@
 #!/usr/bin/env bash
-# Update the package lists
+# Configure HAproxy on lb-01 server
 
 sudo apt-get install -y haproxy
 
-# Configure HAProxy
-echo "ENABLED-1" >> /etc/default/haproxy
-mv /etc/haproxy/haproxy.cfg{,.original}
-touch /etc/haproxy/haproxy.cfg
+echo "ENABLED=1" | sudo tee -a /etc/default/haproxy
 
-printf %s "global
+sudo mv /etc/haproxy/haproxy.cfg{,.original}
+sudo tee /etc/haproxy/haproxy.cfg > /dev/null <<'EOF'
+global
     log 127.0.0.1 local0 notice
     maxconn 2000
     user haproxy
@@ -42,10 +41,15 @@ backend servers
     balance roundrobin
     server  422858-web-01 100.26.168.142:80 check
     server  422858-web-02 100.25.35.218:80 check
-" >> /etc/haproxy/haproxy.cfg
+EOF
 
 # Restart HAProxy service
 sudo systemctl restart haproxy
 
 # Display HAProxy service status
 sudo systemctl status haproxy.service
+
+# Output server names and IPs
+echo "Server names and IPs:"
+echo "422858-web-01	100.26.168.142"
+echo "422858-web-02	100.25.35.218"
