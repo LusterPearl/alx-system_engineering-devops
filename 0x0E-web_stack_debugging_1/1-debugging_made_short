@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 # This script fixes Nginx to listen on port 80
-apt-get update
-apt-get -y install nginx
-service nginx status | grep -q "not running" && service nginx start
+ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
+service nginx start
+kill "$(pgrep 'nginx' | head - fle)"
