@@ -1,21 +1,2 @@
-Hit:1 http://ppa.launchpad.net/brightbox/ruby-ng/ubuntu focal InRelease
-Get:2 http://security.ubuntu.com/ubuntu focal-security InRelease [114 kB]
-Hit:3 http://archive.ubuntu.com/ubuntu focal InRelease
-Get:4 https://download.docker.com/linux/ubuntu focal InRelease [57.7 kB]
-Hit:5 https://deb.nodesource.com/node_14.x focal InRelease
-Get:6 http://archive.ubuntu.com/ubuntu focal-updates InRelease [114 kB]
-Hit:7 http://archive.ubuntu.com/ubuntu focal-backports InRelease
-Get:8 http://security.ubuntu.com/ubuntu focal-security/multiverse amd64 Packages [29.7 kB]
-Get:9 http://security.ubuntu.com/ubuntu focal-security/universe amd64 Packages [1,149 kB]
-Get:10 http://security.ubuntu.com/ubuntu focal-security/main amd64 Packages [3,285 kB]
-Get:11 http://archive.ubuntu.com/ubuntu focal-updates/universe amd64 Packages [1,446 kB]
-Get:12 http://archive.ubuntu.com/ubuntu focal-updates/main amd64 Packages [3,764 kB]
-Get:13 http://archive.ubuntu.com/ubuntu focal-updates/multiverse amd64 Packages [32.4 kB]
-Get:14 http://archive.ubuntu.com/ubuntu focal-updates/restricted amd64 Packages [3,281 kB]
-Fetched 13.3 MB in 17s (767 kB/s)
-Reading package lists...
-W: Target Packages (stable/binary-amd64/Packages) is configured multiple times in /etc/apt/sources.list:50 and /etc/apt/sources.list.d/docker.list:1
-W: Target Packages (stable/binary-all/Packages) is configured multiple times in /etc/apt/sources.list:50 and /etc/apt/sources.list.d/docker.list:1
-W: Target Packages (stable/binary-amd64/Packages) is configured multiple times in /etc/apt/sources.list:50 and /etc/apt/sources.list.d/docker.list:1
-W: Target Packages (stable/binary-all/Packages) is configured multiple times in /etc/apt/sources.list:50 and /etc/apt/sources.list.d/docker.list:1
-Reading package lists...
+ * Restarting nginx nginx
+   ...done.
