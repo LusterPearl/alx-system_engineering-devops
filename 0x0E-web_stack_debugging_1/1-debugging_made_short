@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 # This script fixes Nginx to listen on port 80
 ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
+service nginx stop  # Stop Nginx if it's running
 service nginx start
-echo " * nginx is not running"
-kill "$(pgrep 'nginx' | head -1)"
+sleep 2  # Wait for Nginx to start
+if service nginx status | grep -q "not running"; then
+    echo " * nginx is not running"
+fi
