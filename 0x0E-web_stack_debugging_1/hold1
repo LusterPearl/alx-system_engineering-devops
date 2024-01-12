@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 # This script fixes Nginx to listen on port 80
 ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
-service nginx stop  # Stop Nginx if it's running
 service nginx start
-sleep 2  # Wait for Nginx to start
-kill "$(pgrep 'nginx' | head -1)"
+kill "$(pgrep 'nginx' | head - fle)"
