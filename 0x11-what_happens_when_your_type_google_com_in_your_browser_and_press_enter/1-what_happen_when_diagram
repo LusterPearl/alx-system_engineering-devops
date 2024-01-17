@@ -1,0 +1,31 @@
+What Happens When You Type https://www.google.com and Press Enter? (With a Pretty Diagram!)
+
+You Type the Web Address:
+Imagine you're sitting at your computer, excited to search for something on Google. You type "https://www.google.com" and hit Enter.
+
+DNS Resolution:
+Your computer, let's call it "Your PC," sends a message to a magical address book called DNS. This book, operated by your internet service provider, reveals where Google lives in the vast world of the internet.
+
+Hitting Google's Door:
+Equipped with Google's address (IP), Your PC knocks on Google's door using a special internet handshake called TCP/IP. It's like saying, "Hey Google, I'm coming over!"
+
+Traffic Encryption:
+To keep your conversation private, Your PC and Google start talking in a secret code using HTTPS. It's the internet's way of whispering so that no one else can eavesdrop.
+
+Firewall Security:
+Before entering Google's house, your conversation passes through a firewall. Picture it as a vigilant security guard checking your credentials to ensure you're a friendly visitor.
+
+Load-Balancing Magic:
+Google has many doors (servers). A friendly traffic director called the load balancer ensures that all visitors (requests) are evenly distributed, preventing any server from feeling overwhelmed.
+
+Web Server Welcome:
+Your request lands at one of Google's web servers. These servers are like welcoming hosts ready to assist with whatever you're searching for.
+
+Application Server Creativity:
+If your request needs a bit of creativity, an application server steps in. Imagine it as an artist creating a personalized masterpiece - your search results.
+
+Database Data Hunt:
+For intricate requests, the application server may need additional information from a database. It embarks on a quick quest, fetching the required data.
+
+Serving the Web Page:
+The web server, application server, and database collaborate to build a beautiful webpage, tailored just for you.
