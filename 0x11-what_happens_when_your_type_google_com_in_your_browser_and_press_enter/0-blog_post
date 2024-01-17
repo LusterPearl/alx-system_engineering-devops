@@ -1,7 +1,7 @@
-Title: Understanding the Journey: What Happens When You Type "https://www.google.com" and Press Enter?
+Understanding the Journey: What Happens When You Type "https://www.google.com" and Press Enter?
 
 Introduction:
-In this blog post, I will embark on a journey through the intricacies of the web stack to understand,
+In this blog post, I want to talk on the intricacies of the web stack to understand,
 the series of events that unfold when you type "https://www.google.com" into your browser and hit Enter. 
 
 DNS Request:The journey begins with a Domain Name System (DNS) request. When you enter a URL, the browser needs to find the corresponding IP address.
