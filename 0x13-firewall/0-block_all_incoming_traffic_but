@@ -1,0 +1,20 @@
+# Content of 0-block_all_incoming_traffic_but
+
+# Install UFW
+sudo apt-get update
+sudo apt-get install ufw
+
+# Set Default Policies
+sudo ufw default deny incoming
+sudo ufw default allow outgoing
+
+# Allow Specific Ports
+sudo ufw allow 22
+sudo ufw allow 443
+sudo ufw allow 80
+
+# Enable UFW
+sudo ufw enable
+
+# Confirm Rules
+sudo ufw status
