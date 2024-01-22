@@ -1,4 +1,4 @@
-#!usr/bin/env bash
+#!/bin/bash
 #100-port_forwarding
 
 # NAT table rules
