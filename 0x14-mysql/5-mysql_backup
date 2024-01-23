@@ -1,0 +1,11 @@
+#!/bin/bash
+# backup and compress all databases
+
+# Check if the correct number of arguments is provided
+day=$(date +"%d")
+month=$(date +"%m")
+year=$(date +"%Y")
+file_name="$day-$month-$year.tar.gz"
+
+mysqldump --all-databases -u root --password="$1" > backup.sql
+tar -czvf "$file_name" backup.sql
