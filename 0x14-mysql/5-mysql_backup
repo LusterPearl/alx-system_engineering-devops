@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # backup and compress all databases
 
 # Check if the correct number of arguments is provided
