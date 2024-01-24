@@ -1,25 +1,8 @@
 #!/usr/bin/env bash
 # This script configures Nginx to run as the nginx user and listen on port 8080
 
-# Create directories if they don't exist
-mkdir -p /etc/nginx/sites-available /etc/nginx/sites-enabled
-
-# Create a new Nginx configuration file for your site
-echo "server {
-    listen 8080;
-    server_name localhost;
-
-    location / {
-        root /usr/share/nginx/html;
-        index index.html;
-    }
-
-    # Additional configuration if needed
-
-}" > /etc/nginx/sites-available/my_site
-
-# Create a symbolic link to enable the site
-ln -s /etc/nginx/sites-available/my_site /etc/nginx/sites-enabled/
+# Update the Nginx configuration to run as the nginx user
+sed -i 's/user www-data;/user nginx;/' /etc/nginx/nginx.conf
 
 # Restart Nginx to apply the changes
 service nginx restart
