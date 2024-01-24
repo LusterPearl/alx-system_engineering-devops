@@ -1,24 +1,28 @@
 #!/usr/bin/env bash
-# This script configures Nginx to run as the nginx user
-# and listen on all active IPs on port 8080
+# This script configures Nginx to run as the nginx user and listen on port 8080
 
-# Find the Nginx configuration file path
-nginx_conf_path=$(find /etc -name nginx.conf 2>/dev/null | head -n 1)
+# Create a new Nginx configuration file for your site
+echo "server {
+    listen 8080;
+    server_name localhost;
 
-# Find the default Nginx site configuration file path
-default_site_conf_path=$(find /etc/nginx/conf.d -name default.conf 2>/dev/null | head -n 1)
+    location / {
+        root /usr/share/nginx/html;
+        index index.html;
+    }
 
-# Check if configuration files are found
-if [ -z "$nginx_conf_path" ] || [ -z "$default_site_conf_path" ]; then
-    echo "Error: Nginx configuration files not found."
-    exit 1
-fi
+    # Additional configuration if needed
 
-# Replace nginx user in Nginx configuration
-sed -i 's/user\s*nginx;/user nginx;/' "$nginx_conf_path"
+}" > /etc/nginx/sites-available/my_site
 
-# Replace default listening port in Nginx configuration
-sed -i 's/listen\s*80;/listen 8080;/' "$default_site_conf_path"
+# Create a symbolic link to enable the site
+ln -s /etc/nginx/sites-available/my_site /etc/nginx/sites-enabled/
 
-# Restart Nginx for changes to take effect
+# Restart Nginx to apply the changes
 service nginx restart
+
+# Check if Nginx is running as the nginx user
+ps auxff | grep '[n]ginx'
+
+# Check if Nginx is listening on port 8080
+nc -z 0 8080
