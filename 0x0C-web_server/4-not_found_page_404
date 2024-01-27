@@ -1,19 +1,18 @@
 #!/usr/bin/env bash
-# This script configures Nginx to have a custom 404 page
+# This script configures Nginx on an Ubuntu machine to redirect /redirect_me to a specified page with a 301 Moved Permanently status
 
-# Ensure Nginx is installed and running (if not already done)
+# Install Nginx (assuming it's not installed already)
 sudo apt-get update -y
 sudo apt-get install nginx -y
-sudo service nginx start
 
-# Create a backup of the default Nginx configuration file
-sudo cp /etc/nginx/sites-available/default /etc/nginx/sites-available/default_backup
+# Create a simple HTML page with the string "Hello World!" (replace with your desired content)
+echo "Hello World!" | sudo tee /var/www/html/index.html > /dev/null
 
-# Define the custom 404 page in Nginx configuration
-echo -e "\nerror_page 404 /custom_404.html;\nlocation = /custom_404.html {\n\tinternal;\n\treturn 404 \"Ceci n'est pas une page\";\n}\n" | sudo tee -a /etc/nginx/sites-available/default > /dev/null
+# Configure Nginx for /redirect_me redirection with a 301 status
+sudo sed -i '/listen 80 default_server;/a \\n\
+location /redirect_me {\n\
+    return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;\n\
+}\n' /etc/nginx/sites-available/default
 
-# Create the custom 404 page in the correct directory
-echo "Ceci n'est pas une page" | sudo tee /var/www/html/custom_404.html > /dev/null
-
-# Restart Nginx to apply changes
+# Restart Nginx to apply the changes
 sudo service nginx restart
