@@ -1,18 +1,31 @@
 #!/usr/bin/env bash
-# This script configures Nginx on an Ubuntu machine to redirect /redirect_me to a specified page with a 301 Moved Permanently status
+# Automatically installs and configures Nginx
 
-# Install Nginx (assuming it's not installed already)
-sudo apt-get update -y
-sudo apt-get install nginx -y
+# Update package list
+apt-get update
 
-# Create a simple HTML page with the string "Hello World!" (replace with your desired content)
-echo "Hello World!" | sudo tee /var/www/html/index.html > /dev/null
+# Install Nginx
+apt-get -y install nginx
 
-# Configure Nginx for /redirect_me redirection with a 301 status
-sudo sed -i '/listen 80 default_server;/a \\n\
-location /redirect_me {\n\
-    return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;\n\
-}\n' /etc/nginx/sites-available/default
+# Allow write permissions to the HTML directory
+chmod o+w /var/www/html/
 
-# Restart Nginx to apply the changes
-sudo service nginx restart
+# Create index.html with 'Hello World!'
+echo "Hello World!" > /var/www/html/index.html
+
+# Create custom 404 page
+echo "Ceci n'est pas une page" > /var/www/html/404.html
+
+# Backup default Nginx configuration
+cp /etc/nginx/sites-enabled/default ~/defaultBackup
+
+# Configure redirection to https://github.com
+redirectLine="server_name _;\n\n\tlocation /redirect_me {\n\t\treturn 301 https://github.com;\n\t}"
+sed -i "s|listen 80 default_server;|${redirectLine}|" /etc/nginx/sites-enabled/default
+
+# Configure custom 404 page
+errorPage="server_name _;\n\n\terror_page 404 /404.html;\n\n\tlocation = /404.html {\n\t\tinternal;\n\t\treturn 404 'Ceci n\\'est pas une page';\n\t}"
+sed -i "s|listen 80 default_server;|${errorPage}|" /etc/nginx/sites-enabled/default
+
+# Restart Nginx to apply changes
+service nginx restart
