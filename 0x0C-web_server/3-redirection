@@ -1,16 +1,17 @@
 #!/usr/bin/env bash
-# This script configures Nginx to set up a 301 redirection
+# Automatically installs and configures Nginx to listen on port 80
+# Creates a file at the root of the server containing 'Hello World!'
+# Redirects /redirect_me to https://github.com using sed
 
-# Ensure Nginx is installed and running (if not already done)
-sudo apt-get update -y
-sudo apt-get install nginx -y
-sudo service nginx start
+apt-get update
+apt-get -y install nginx
+chmod o+w /var/www/html/
+echo "Hello World!" > /var/www/html/index.html
 
-# Create a backup of the default Nginx configuration file
-sudo cp /etc/nginx/sites-available/default /etc/nginx/sites-available/default_backup
+# Backup default Nginx configuration
+cp /etc/nginx/sites-enabled/default ~/defaultBackup
 
-# Define the redirection in Nginx configuration
-echo -e "\nlocation /redirect_me {\n\treturn 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;\n}\n" | sudo tee -a /etc/nginx/sites-available/default > /dev/null
+redirectLine="server_name _;\n\n\tlocation /redirect_me {\n\t\treturn 301 https://github.com;\n\t}"   
+sed -i "s|server_name _;|${redirectLine}|" /etc/nginx/sites-enabled/default
 
-# Restart Nginx to apply changes
-sudo service nginx restart
+service nginx restart
