@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-#install HAproxy and configure
+#Install haproxy and cpnfigure it 
 
 # Add HAProxy PPA and install HAProxy
 sudo add-apt-repository -y ppa:vbernat/haproxy
@@ -43,7 +43,7 @@ backend servers
     timeout server 30000
     balance roundrobin
     server  422858-web-01 100.26.168.142:80 check
-    server  422858-web-02 100.25.35.218:80 check
+    server  422858-web-02 100.26.228.246:80 check  # Updated IP for web-02
 
 listen load_balancer
     bind *:80
@@ -51,8 +51,8 @@ listen load_balancer
     balance roundrobin
     option httpclose
     option forwardfor
-    server 430654-web-01 100.26.239.81:80 check
-    server 430654-web-02 54.165.171.31:80 check
+    server 422858-web-01 100.26.168.142:80 check
+    server 422858-web-02 100.26.228.246:80 check  # Updated IP for web-02
 EOL
 
 # Restart HAProxy
