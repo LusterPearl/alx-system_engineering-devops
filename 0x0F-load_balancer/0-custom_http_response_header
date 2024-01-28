@@ -1,13 +1,41 @@
 #!/usr/bin/env bash
-# Update the package list
+# configure a server with a custom header 'X-Served-By'
+# value equal to the hostname of the server processing the request
 
+# Update package lists with sudo
 sudo apt-get update
 
-# Install Nginx package
-sudo apt-get install -y nginx
+# Install Nginx with sudo
+sudo apt-get -y install nginx
 
-# Add custom HTTP response header to Nginx config
-echo 'add_header X-Served-By "$HOSTNAME";' | sudo tee -a /etc/nginx/nginx.conf
+# Provide write permissions to /var/www/html/
+sudo chmod o+w /var/www/html/
 
-# Restart Nginx service
-sudo systemctl restart nginx
+# Create an index.html file
+echo "Hello World!" | sudo tee /var/www/html/index.html > /dev/null
+
+# Create a custom 404 page
+echo "Ceci n'est pas une page" | sudo tee /var/www/html/404.html > /dev/null
+
+# Backup default Nginx configuration
+sudo cp /etc/nginx/sites-enabled/default ~/defaultBackup
+
+# Define the redirectLine
+redirectLine="server_name _;\n\n\tlocation /redirect_me {\n\t\treturn 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;\n\t}"
+
+# Define the errorPage
+errorPage="server_name _;\n\n\terror_page 404 /404.html;\n"
+
+# Use sudo with sed to replace server_name and add the redirectLine and errorPage
+sudo sed -i "s|server_name _;|${redirectLine}|" /etc/nginx/sites-enabled/default
+sudo sed -i "s|server_name _;|${errorPage}|" /etc/nginx/sites-enabled/default
+
+# Use sudo with sed to insert the header line
+sudo sed -i "/location \/ {/ a\\
+\\t\tadd_header X-Served-By \$hostname;" /etc/nginx/sites-enabled/default
+
+# Test Nginx for errors
+sudo nginx -t
+
+# Restart Nginx with sudo
+sudo service nginx restart
