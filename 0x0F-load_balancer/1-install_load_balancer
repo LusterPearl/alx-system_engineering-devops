@@ -43,7 +43,7 @@ backend servers
     timeout server 30000
     balance roundrobin
     server  422858-web-01 100.26.168.142:80 check
-    server  422858-web-02 100.26.228.246:80 check  # Updated IP for web-02
+    server  422858-web-02 100.26.228.246:80 check
 
 listen load_balancer
     bind *:80
@@ -52,7 +52,7 @@ listen load_balancer
     option httpclose
     option forwardfor
     server 422858-web-01 100.26.168.142:80 check
-    server 422858-web-02 100.26.228.246:80 check  # Updated IP for web-02
+    server 422858-web-02 100.26.228.246:80 check
 EOL
 
 # Restart HAProxy
