@@ -26,9 +26,8 @@ if __name__ == "__main__":
 
     # Fetch TODOs data
     todos_url = (
-        f"https://jsonplaceholder.typicode.com/todos"
-        f"?userId={employee_id}"
-        )
+        f"https://jsonplaceholder.typicode.com/todos?userId={employee_id}"
+    )
     todos_response = requests.get(todos_url)
     todos_data = todos_response.json()
 
@@ -36,14 +35,17 @@ if __name__ == "__main__":
     user_id = user_data.get("id")
     username = user_data.get("username")
 
+    # Corrected formatting for user ID and username
+    print(f"User ID: {user_id} / Username: {username}")
+
     employee_tasks = [
-            {
-                "USER_ID": user_id,
-                "USERNAME": username,
-                "TASK_COMPLETED_STATUS": str(task.get("completed")),
-                "TASK_TITLE": task.get("title")
-            }
-            for task in todos_data
+        {
+            "USER_ID": user_id,
+            "USERNAME": username,
+            "TASK_COMPLETED_STATUS": str(task.get("completed")),
+            "TASK_TITLE": task.get("title")
+        }
+        for task in todos_data
     ]
 
     # Save data to CSV file
