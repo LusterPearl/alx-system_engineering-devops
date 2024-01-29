@@ -11,9 +11,13 @@ from os.path import isfile
 
 def read_existing_data(filename):
     if isfile(filename):
-        with open(filename, 'r') as file:
-            return json.load(file)
+        try:
+            with open(filename, 'r') as file:
+                return json.load(file)
+        except json.JSONDecodeError:
+            return {}
     return {}
+
 
 if __name__ == "__main__":
     # Check if an employee ID is provided as a command-line argument
@@ -24,13 +28,18 @@ if __name__ == "__main__":
         exit(1)
 
     # Construct user URL and fetch employee data from the JSONPlaceholder API
-    user_url = "https://jsonplaceholder.typicode.com/users/{}".format(employee_id)
+    user_url = (
+        "https://jsonplaceholder.typicode.com/users/{}".format(employee_id)
+    )
     response_user = requests.get(user_url)
     user_data = response_user.json()
     employee_username = user_data.get("username")
 
     # Construct todos URL and fetch todos data for the specific employee
-    todos_url = "https://jsonplaceholder.typicode.com/todos?userId={}".format(employee_id)
+    todos_url = (
+        "https://jsonplaceholder.typicode.com/todos?userId={}"
+        .format(employee_id)
+    )
     response_todos = requests.get(todos_url)
     todos_data = response_todos.json()
 
