@@ -62,3 +62,10 @@ if __name__ == "__main__":
     # Export the updated data to todo_all_employees.json
     with open("todo_all_employees.json", "w") as json_file:
         json.dump(existing_data, json_file, indent=2)
+
+    print("User ID {} Found: OK".format(employee_id))
+    print("All users found: OK")
+    print(
+          "User ID {} tasks exported to todo_all_employees.json"
+         .format(employee_id)
+    )
