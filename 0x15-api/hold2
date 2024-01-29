@@ -1,0 +1,70 @@
+#!/usr/bin/python3
+"""
+Extend your Python script to export data in the JSON format.
+"""
+
+import json
+import os
+import requests
+from sys import argv
+
+
+def get_employee_data(employee_id):
+    # Fetch employee data from the JSONPlaceholder API
+    user_url = (
+            "https://jsonplaceholder.typicode.com/users/{}"
+            .format(employee_id)
+    )
+    response_user = requests.get(user_url)
+    user_data = response_user.json()
+    employee_username = user_data.get("username")
+
+    # Fetch todos data for the specific employee from JSONPlaceholder
+    todos_url = (
+            "https://jsonplaceholder.typicode.com/todos?userId={}"
+            .format(employee_id)
+    )
+    response_todos = requests.get(todos_url)
+    todos_data = response_todos.json()
+
+    # Create a list of tasks for the employee
+    tasks = []
+    for todo in todos_data:
+        task_dict = {
+            "username": employee_username,
+            "task": todo["title"],
+            "completed": todo["completed"]
+        }
+        tasks.append(task_dict)
+
+    return tasks
+
+
+def write_to_json(data):
+    # Check if the JSON file already exists
+    filename = "todo_all_employees.json"
+    if os.path.exists(filename):
+        with open(filename, "r") as json_file:
+            content = json.load(json_file)
+            content.update(data)
+        mode = "w"
+    else:
+        content = data
+        mode = "w"
+
+    # Export the data to todo_all_employees.json
+    with open(filename, mode) as json_file:
+        json.dump(content, json_file, indent=4)
+
+
+if __name__ == "__main__":
+    # Check if an employee ID is provided
+    if len(argv) == 2 and argv[1].isdigit():
+        employee_id = argv[1]
+    else:
+        print("Usage: {} EMPLOYEE_ID".format(argv[0]))
+        exit(1)
+
+    # Fetch employee data and write to JSON
+    employee_data = get_employee_data(employee_id)
+    write_to_json({employee_id: employee_data})

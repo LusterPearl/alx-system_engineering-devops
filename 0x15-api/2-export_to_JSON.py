@@ -14,7 +14,7 @@ if __name__ == "__main__":
 
     employee_id = int(sys.argv[1])
 
-    # Fethc user data
+    # Fetch user data
     user_url = f"https://jsonplaceholder.typicode.com/users/{employee_id}"
     user_response = requests.get(user_url)
 
@@ -48,8 +48,9 @@ if __name__ == "__main__":
     ]
 
     # Save data to JSON file
-    json_file_path = f"{employee_id}.json"
-    with open(json_file_path, mode="w") as json_file:
+    json_file_path = "todo_all_employees.json"
+    with open(json_file_path, mode="a") as json_file:
         json.dump({str(employee_id): employee_tasks}, json_file)
 
-    print(f"Data exported to {json_file_path}")
+    print(f"Data for employee ID {employee_id} "
+          f"exported to todo_all_employees.json")
