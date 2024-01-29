@@ -19,15 +19,14 @@ if __name__ == "__main__":
     user_response = requests.get(user_url)
 
     if user_response.status_code != 200:
-        print(f"Error feteching user data for ID {employee_id})")
+        print(f"Error fetching user data for ID {employee_id}")
         sys.exit(1)
 
     user_data = user_response.json()
 
     # Fetch TODOs data
     todos_url = (
-        f"https://jsonplaceholder.typicode.com/todos"
-        f"?userId={employee_id}"
+        f"https://jsonplaceholder.typicode.com/todos?userId={employee_id}"
     )
     todos_response = requests.get(todos_url)
 
@@ -39,18 +38,17 @@ if __name__ == "__main__":
 
     # Filter tasks for this employee
     employee_tasks = [
-            {
-                "task": task.get("title"),
-                "completed": task.get("completed"),
-                "username": user_data.get("username")
-            }
-            for task in todos_data
+        {
+            "task": task.get("title"),
+            "completed": task.get("completed"),
+            "username": user_data.get("username")
+        }
+        for task in todos_data
     ]
 
     # Save data to JSON file
-    json_file_path = "todo_all_employees.json"
-    with open(json_file_path, mode="a") as json_file:
+    json_file_path = f"{employee_id}.json"
+    with open(json_file_path, mode="w") as json_file:
         json.dump({str(employee_id): employee_tasks}, json_file)
 
-    print(f"Data for employee ID {employee_id} "
-          f"exported to todo_all_employees.json")
+    print(f"Data exported to {json_file_path}")
