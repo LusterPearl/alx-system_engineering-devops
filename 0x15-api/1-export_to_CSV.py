@@ -1,68 +1,41 @@
 #!/usr/bin/python3
 """
-Script to export data in CSV format based on employee ID.
+Fetches information about an employee using a REST API and
+exports it to a CSV file.
 """
-import requests
+
 import csv
+import requests
 import sys
 
-
 if __name__ == "__main__":
-    if len(sys.argv) != 2 or not sys.argv[1].isdigit():
-        print("Usage: ./1-export_to_CSV.py <employee_id>")
-        sys.exit(1)
+    # Get the employee ID from the command line arguments
+    user_id = sys.argv[1]
 
-    employee_id = int(sys.argv[1])
+    # Define the base URL for the JSONPlaceholder API
+    base_url = "https://jsonplaceholder.typicode.com/"
 
-    # Fetch user data
-    user_url = f"https://jsonplaceholder.typicode.com/users/{employee_id}"
-    user_response = requests.get(user_url)
+    # Fetch user details
+    user_response = requests.get(base_url + "users/{}".format(user_id))
+    user = user_response.json()
+    username = user.get("username")
 
-    if user_response.status_code != 200:
-        print(f"Error fetching user data for ID {employee_id}")
-        sys.exit(1)
+    # Fetch TODOs for the user
+    todos_response = requests.get(
+        base_url + "todos", params={"userId": user_id})
+    todos = todos_response.json()
 
-    user_data = user_response.json()
-
-    # Fetch TODOs data
-    todos_url = (
-        f"https://jsonplaceholder.typicode.com/todos?userId={employee_id}"
-    )
-    todos_response = requests.get(todos_url)
-    todos_data = todos_response.json()
-
-    # Filter tasks for this employee
-    user_id = user_data.get("id")
-    username = user_data.get("username")
-
-    # Corrected formatting for user ID and username
-    print(f"User ID: {user_id} / Username: {username}")
-
-    employee_tasks = [
-        {
-            "USER_ID": user_id,
-            "USERNAME": username,
-            "TASK_COMPLETED_STATUS": str(task.get("completed")),
-            "TASK_TITLE": task.get("title")
-        }
-        for task in todos_data
-    ]
-
-    # Save data to CSV file
-    csv_file_path = f"{employee_id}.csv"
-    with open(csv_file_path, mode="w", newline="") as csv_file:
-        fieldnames = [
-            "USER_ID",
-            "USERNAME",
-            "TASK_COMPLETED_STATUS",
-            "TASK_TITLE"
-        ]
-        writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
+    # Write user and TODOs data to a CSV file
+    with open("{}.csv".format(user_id), "w", newline="") as csvfile:
+        writer = csv.writer(csvfile, quoting=csv.QUOTE_ALL)
 
         # Write header
-        writer.writeheader()
+        writer.writerow(
+                ["User ID", "Username", "Task Completed", "Task Title"])
 
-        # Write tasks data
-        writer.writerows(employee_tasks)
+        # Write data rows
+        [writer.writerow(
+            [user_id, username, t.get("completed"), t.get("title")]
+        ) for t in todos]
 
-    print(f"Data exported to {csv_file_path}")
+    print("Data exported to {}.csv".format(user_id))
