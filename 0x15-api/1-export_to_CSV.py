@@ -1,41 +1,24 @@
 #!/usr/bin/python3
 """
-Fetches information about an employee using a REST API and
-exports it to a CSV file.
+Ret API to retrieve information about an employee based
+on the exports acquired data tto a csv file
 """
-
 import csv
 import requests
 import sys
 
+
 if __name__ == "__main__":
-    # Get the employee ID from the command line arguments
+    # Obtain the employee ID from the CSV
     user_id = sys.argv[1]
-
-    # Define the base URL for the JSONPlaceholder API
-    base_url = "https://jsonplaceholder.typicode.com/"
-
-    # Fetch user details
-    user_response = requests.get(base_url + "users/{}".format(user_id))
-    user = user_response.json()
+    url = "https://jsonplaceholder.typicode.com/"
+    user = requests.get(url + "users/{}".format(user_id)).json()
     username = user.get("username")
+    todos = requests.get(url + "todos", params={"userId": user_id}).json()
 
-    # Fetch TODOs for the user
-    todos_response = requests.get(
-        base_url + "todos", params={"userId": user_id})
-    todos = todos_response.json()
-
-    # Write user and TODOs data to a CSV file
+    # Write the retrieved data to a CSV file named after the emplyee
     with open("{}.csv".format(user_id), "w", newline="") as csvfile:
         writer = csv.writer(csvfile, quoting=csv.QUOTE_ALL)
-
-        # Write header
-        writer.writerow(
-                ["User ID", "Username", "Task Completed", "Task Title"])
-
-        # Write data rows
         [writer.writerow(
             [user_id, username, t.get("completed"), t.get("title")]
         ) for t in todos]
-
-    print("Data exported to {}.csv".format(user_id))
