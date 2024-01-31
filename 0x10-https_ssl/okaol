@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+# Script: 0-world_wide_web
+# Description: Display information about subdomains of a given domain
+
+# Function to get DNS information for a subdomain
+get_dns_info() {
+    domain="$1"
+    subdomain="$2"
+
+    # Query DNS information using dig and extract relevant details using awk
+    dig_output=$(dig "$subdomain.$domain" | awk '/ANSWER SECTION/ {getline; print}')
+    
+    # Extract record type and destination using awk
+    record_type=$(echo "$dig_output" | awk '{print $4}')
+    destination=$(echo "$dig_output" | awk '{print $5}')
+
+    # Display the information
+    echo "The subdomain $subdomain is a $record_type record and points to $destination"
+}
+
+# Main script execution
+if [ $# -eq 1 ]; then
+    # If only the domain is provided, display information for all subdomains
+    get_dns_info "$1" "www"
+    get_dns_info "$1" "lb-01"
+    get_dns_info "$1" "web-01"
+    get_dns_info "$1" "web-02"
+elif [ $# -eq 2 ]; then
+    # If both domain and subdomain are provided, display information for the specified subdomain
+    get_dns_info "$1" "$2"
+else
+    # Display usage message if incorrect number of arguments are provided
+    echo "Usage: $0 <domain> [subdomain]"
+    exit 1
+fi

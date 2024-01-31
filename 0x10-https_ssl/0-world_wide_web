@@ -1,35 +1,33 @@
-#!/usr/bin/env bash
-# Script: 0-world_wide_web
-# Description: Display information about subdomains of a given domain
+#!/bin/bash
 
-# Function to get DNS information for a subdomain
-get_dns_info() {
-    domain="$1"
-    subdomain="$2"
+# Function to display DNS information
+display_dns_info() {
+    local subdomain=$1
+    local domain=$2
 
-    # Query DNS information using dig and extract relevant details using awk
-    dig_output=$(dig "$subdomain.$domain" | awk '/ANSWER SECTION/ {getline; print}')
-    
-    # Extract record type and destination using awk
-    record_type=$(echo "$dig_output" | awk '{print $4}')
-    destination=$(echo "$dig_output" | awk '{print $5}')
+    # Use dig command to get DNS information
+    dns_output=$(dig "${subdomain}.${domain}" +short)
 
-    # Display the information
-    echo "The subdomain $subdomain is a $record_type record and points to $destination"
+    # Check if DNS information is available
+    if [ -n "$dns_output" ]; then
+        echo "The subdomain ${subdomain} is a A record and points to ${dns_output}"
+    else
+        echo "No DNS information found for the subdomain ${subdomain}"
+    fi
 }
 
-# Main script execution
-if [ $# -eq 1 ]; then
-    # If only the domain is provided, display information for all subdomains
-    get_dns_info "$1" "www"
-    get_dns_info "$1" "lb-01"
-    get_dns_info "$1" "web-01"
-    get_dns_info "$1" "web-02"
-elif [ $# -eq 2 ]; then
-    # If both domain and subdomain are provided, display information for the specified subdomain
-    get_dns_info "$1" "$2"
+# Check the number of arguments
+if [ "$#" -eq 1 ]; then
+    # Display information for default subdomains
+    display_dns_info www "$1"
+    display_dns_info lb-01 "$1"
+    display_dns_info web-01 "$1"
+    display_dns_info web-02 "$1"
+elif [ "$#" -eq 2 ]; then
+    # Display information for the specified subdomain
+    display_dns_info "$2" "$1"
 else
-    # Display usage message if incorrect number of arguments are provided
+    # Invalid number of arguments
     echo "Usage: $0 <domain> [subdomain]"
     exit 1
 fi
