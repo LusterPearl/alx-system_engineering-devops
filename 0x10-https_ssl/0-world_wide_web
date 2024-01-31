@@ -1,4 +1,5 @@
-#!/bin/bash
+#!/usr/bin/env bash
+# Script that takes 2 arguments: Domain and subdomain
 
 # Function to display DNS information
 display_dns_info() {
