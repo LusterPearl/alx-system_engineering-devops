@@ -7,16 +7,14 @@ after = None
 
 
 def recurse(subreddit, hot_list=[]):
-    """Recursively fetch the top post titles from a given subreddit.
-
+    """Recursively fetch the top post subreddit.
     Args:
         subreddit (str): The name of the subreddit.
         hot_list (list): List to store the top post titles.
         after (str): The 'after' parameter for pagination.
         limit (int): The maximum number of posts to fetch.
-
     Returns:
-        list: The list of top post titles from the subreddit.
+        The list of top post titles from the subreddit.
     """
     global after
     user_agent = {'User-Agent': 'api_advanced-project'}
