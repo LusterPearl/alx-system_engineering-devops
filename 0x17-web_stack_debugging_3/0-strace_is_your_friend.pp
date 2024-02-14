@@ -2,7 +2,15 @@
 # Puppet manifest to fix Apache 500 error using strace debugging
 
 # Execute command to fix the issue
-exec { 'Fix typo in filename':
-  command => 'sudo sed -i "s/.phpp/-php/" /var/www/html/wp-settings.php',
-  provider => shell,
+exec { 'fix-apache-error':
+  command     => '/bin/some_command_to_fix_the_issue',
+  path        => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+  refreshonly => true,
+}
+
+# Notify Apache service to restart if the fix is applied
+service { 'apache2':
+  ensure  => 'running',
+  enable  => true,
+  require => Exec['fix-wordpress'],
 }
