@@ -3,8 +3,8 @@
 100-count aicles
 """
 
-import requests
 import json
+import requests
 
 
 def count_words(subreddit, word_list, after=None, word_count={}):
