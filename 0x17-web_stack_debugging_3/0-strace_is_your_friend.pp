@@ -9,8 +9,8 @@ exec { 'fix-apache-error':
 }
 
 # Notify Apache service to restart if the fix is applied
-service { 'apache2':
+service { 'httpd':
   ensure  => 'running',
   enable  => true,
-  require => Exec['fix-wordpress'],
+  require => Exec['fix-apache-error'],
 }
