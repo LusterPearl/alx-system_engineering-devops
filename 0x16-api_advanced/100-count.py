@@ -47,6 +47,5 @@ def count_words(subreddit, word_list, after=None, word_count={}):
                     print(f"{word}: {count}")
 
     else:
-        print(f"Failed to fetch data for subreddit '{subreddit}':
-              {response.status_code")
-              {response.status_code}")
+        print(f"Failed to fetch data for subreddit '{subreddit}':"
+              f"{response.status_code}")
