@@ -4,12 +4,9 @@ In the fast-paced world of web development, every engineer encounters hurdles th
 
 Duration: Various durations, ranging from a few hours to weeks.
 Impact: Multiple services affected, including SSH access, SSL certificate setup, load balancer configuration, and MySQL database.
-Let's delve into the heart of these challenges and uncover the insights gained along the way.
-
-Issue Summary:
-Duration: Various durations, ranging from a few hours to weeks.
-Impact: Multiple services affected, including SSH access, SSL certificate setup, load balancer configuration, and MySQL database.
 Root Causes: Lack of experience, configuration errors, forgetting crucial steps, and encountering unfamiliar technologies.
+Let's delve into the heart of these challenges and uncover the insights gained along the way:
+
 Timeline:
 Detection: Issues were detected through manual observation and system alerts.
 Actions Taken: Investigated affected systems, attempted direct fixes, and escalated unresolved issues to team members.
