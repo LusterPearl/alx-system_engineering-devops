@@ -1,13 +1,7 @@
-# Increase request limit in nginx.configuratio
-exec { 'increase_request_limit':
-  command => 'sed -i "s/worker_connections\s*\(.*\);/worker_connections 4096;/g" /etc/nginx/nginx.conf',
-  path    => '/bin:/usr/bin',
-  onlyif  => 'grep -q "worker_connections 4096;" /etc/nginx/nginx.conf',
-}
-
-# Restart Nginx
-service { 'nginx':
-  ensure    => 'running',
-  enable    => true,
-  subscribe => Exec['increase_request_limit'],
+# change the nginx file limit
+exec { 'Change nginx limit':
+  command  => 'sed -i "s/15/4096/g" /etc/default/nginx && service nginx restart',
+  provider => shell,
+  path     => '/usr/sbin:/usr/bin:/sbin:/bin',
+  unless   => 'grep -q "4096" /etc/default/nginx',
 }
