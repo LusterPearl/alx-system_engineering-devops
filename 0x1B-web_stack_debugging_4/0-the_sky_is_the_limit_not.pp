@@ -1,7 +1,6 @@
 # change the nginx file limit
-exec { 'Change nginx limit':
-  command  => 'sed -i "s/15/4096/g" /etc/default/nginx && service nginx restart',
-  provider => shell,
-  path     => '/usr/sbin:/usr/bin:/sbin:/bin',
-  unless   => 'grep -q "4096" /etc/default/nginx',
+#Nginx limits
+exec { 'Limit':
+  command => '/usr/bin/env sed -i s/15/2000/ /etc/default/nginx',
 }
+exec { '/usr/bin/env service nginx restart': }
