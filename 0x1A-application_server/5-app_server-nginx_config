@@ -1,16 +1,5 @@
-# Default server configuration
-server {
-    listen 80 default_server;
-    listen [::]:80 default_server;
-
-
-    root /var/www/html;
-    index index.html index.htm index.nginx-debian.html;
-
-    server_name 100.26.168.142;
-
-    add_header X-Served-By $hostname;
-
+#!/usr/bin/env bash
+#Default server configuration
     location / {
         proxy_pass http://127.0.0.1:5003;
     }
@@ -22,4 +11,3 @@ server {
     location /templates/ {
         alias /path/to/your/AirBnB_clone_v4/web_dynamic/templates/;
     }
-}
