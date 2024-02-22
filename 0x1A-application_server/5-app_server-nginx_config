@@ -1,13 +1,15 @@
 #!/usr/bin/env bash
 #Default server configuration
-    location / {
-        proxy_pass http://127.0.0.1:5003;
-    }
+location /static {
+	proxy_pass http://127.0.0.1:5003;
+        add_header 'Access-Control-Allow-Origin' 'http://lusterpearl.tech';
+}
 
-    location /static/ {
-        alias /path/to/your/AirBnB_clone_v4/web_dynamic/static/;
-    }
-
-    location /templates/ {
-        alias /path/to/your/AirBnB_clone_v4/web_dynamic/templates/;
-    }
+location / {
+	# First attempt to serve request as file, then
+        # as directory, then fall back to displaying a 404.
+        proxy_pass http://0.0.0.0:5003/2-hbnb;
+        add_header X-Served-By $hostname;
+        try_files $uri $uri/ =404;
+        add_header 'Access-Control-Allow-Origin' 'http://lusterpearl.tech';
+}
