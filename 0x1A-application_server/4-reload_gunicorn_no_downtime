@@ -1,19 +1,4 @@
 #!/usr/bin/env bash
-
 # Find Gunicorn worker PIDs
-gunicorn_workers=$(pgrep -f "gunicorn.*web_flask")
 
-# Validate and handle potential errors
-
-# Send graceful termination signal (e.g., SIGTERM)
-for pid in $gunicorn_workers; do
-  kill -TERM "$pid" || echo "Failed to terminate $pid" >&2
-done
-
-# Wait for graceful exit
-wait $gunicorn_workers || echo "Error waiting for workers to exit" >&2
-
-# Start new Gunicorn workers (replace with appropriate command)
-systemctl reload gunicorn || echo "Error reloading Gunicorn service" >&2
-
-echo "Gunicorn reloaded successfully."
+pkill -HUP -f "gunicorn master"
