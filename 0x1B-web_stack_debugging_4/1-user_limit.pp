@@ -1,12 +1,15 @@
 # raising up limits for user holberton
+# configuration to login to holberton
 
-exec { 'fix limit hard':
-  command => 'sed -i "/holberton hard/s/5/50000/" /etc/security/limits.conf',
-  provider => shell
+exec { 'correct-hard':
+  command  => 'sudo sed -i \'s/nofile 5/nofile 30000/\' /etc/security/limits.conf',
+  provider => shell,
 }
-
-# Increase soft file limit holberton user.
-exec { 'fix limit soft':
-  command   => 'sed -i "/holberton soft/s/4/50000/" /etc/security/limits.conf',
-  provider  => shell
+exec { 'correct-soft':
+  command  => 'sudo sed -i \'s/nofile 4/nofile 10000/\' /etc/security/limits.conf',
+  provider => shell,
+}
+exec { 'change-os-configuration-for-holberton-user':
+  command  => 'sysctl -p',
+  provider => shell,
 }
