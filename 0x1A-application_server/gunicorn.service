@@ -1,0 +1,21 @@
+[Unit]
+Description=My Gunicorn Application Service
+After=network.target
+
+[Service]
+User=ubuntu
+Group=www-data
+WorkingDirectory=/home/ubuntu/AirBnB_clone_v4/web_dynamic
+Environment="FLASK_APP=web_dynamic/2-hbnb.py PYTHONUNBUFFERED=1"
+
+ExecStart=/home/ubuntu/.local/bin/gunicorn \
+    --bind 127.0.0.1:5003 \
+    --workers 3 \
+    --error-log=/tmp/airbnb-error.log \
+    --access-log=/tmp/airbnb-access.log \
+    web_dynamic:2-hbnb
+
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
